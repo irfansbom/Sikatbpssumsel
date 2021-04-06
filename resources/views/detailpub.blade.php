@@ -1,6 +1,5 @@
 @extends('layout/main')
 
-{{-- @section('title', '{{$info->title}}') --}}
 @section('title', 'Detail')
 
 @section('container')
@@ -14,21 +13,27 @@
             <p class="blog-post-meta">{{$data->rl_date}}</p>
             <div class="rounded border border-secondary my-2" style="color">
                 <div class="bg-info" style="text-align:center">
-                    <p class="ml-1 mb-0">ISSN</p>
+                    <p class="ml-1 mb-0 ">ISSN</p>
                 </div>
-                <p class="p-0 mt-0 mb-0 ml-1">{{$data->issn}}</p>
+                <p class="p-0 mt-0 mb-0 ml-1 text-center">{{$data->issn}}</p>
             </div>
             <div class="rounded border border-secondary my-2 " style="color">
                 <div class="bg-info" style="text-align:center">
                     <p class="ml-1 mb-0">Abstrak</p>
                 </div>
-                <p class="p-0 mt-0 mb-0 ml-1">{{$data->abstract}}</p>
+                <p class="p-0 mt-0 mb-0 ml-1" id="isi_abstrak"></p>
+            </div>
+            <div class="rounded border border-secondary my-2" style="color">
+                <div class="bg-info" style="text-align:center">
+                    <p class="ml-1 mb-0">No. Rak</p>
+                </div>
+                <p class="p-0 mt-0 mb-0 ml-1 text-center" id="isi_no_rak"></p>
             </div>
             <div class="rounded border border-secondary my-2" style="color">
                 <div class="bg-info" style="text-align:center">
                     <p class="ml-1 mb-0">No. Publikasi</p>
                 </div>
-                <p class="p-0 mt-0 mb-0 ml-1">{{$data->pub_no}}</p>
+                <p class="p-0 mt-0 mb-0 ml-1 text-center">{{$data->pub_no}}</p>
             </div>
             <div class="">
                 <div class="d-flex justify-content-center">
@@ -46,29 +51,24 @@
                     <p class="m-0">{{$data->size}}</p>
                 </div>
             </div>
-
-        </div><!-- /.blog-main -->
+        </div>
         <aside class="col-md-5 blog-sidebar ">
             <div class="py-4">
                 <div class="rounded">
                     <svg class="bd-placeholder-img card-img-top rounded" width="100%" height="500"
                         xmlns="{{ $data->cover}}" role="img" aria-label="Placeholder: Thumbnail"
                         preserveAspectRatio="xMidYMid slice" focusable="false">
-                        {{-- <title>Placeholder</title> --}}
                         <rect width="100%" height="100%" fill="#17a2b8" />
-                        {{-- <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text> --}}
+
                         <image href="{{ $data->cover}}" width="100%" height="100%" />
                     </svg>
                 </div>
             </div>
-        </aside><!-- /.blog-sidebar -->
-    </div><!-- /.row -->
-</main><!-- /.container -->
+        </aside>
+    </div>
+</main>
 
 <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-</script>
 <style>
     /* stylelint-disable selector-list-comma-newline-after */
 
@@ -197,5 +197,10 @@
     function search(){
       window.location.href = "/katalog?search="+$("#search").val();
     }
+    $(document).ready(function(){
+        $('#isi_abstrak').html({!! json_encode($data->abstract) !!})
+        $('#isi_no_rak').html({!! json_encode($data->no_rak) !!})
+    
+    })
 </script>
 @endsection

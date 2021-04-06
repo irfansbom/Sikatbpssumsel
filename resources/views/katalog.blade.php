@@ -9,27 +9,13 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h2 style="color: #117a8b">Katalog Publikasi BPS</h2>
-        <form>
+        <div>
           <div class="d-flex">
             <input id="search" class="form-control me-2" type="search" placeholder="Cari Judul" aria-label="Search"
               name="search" style="margin-right: 5px; border-color:#17a2b8" value="{{Request::get('search')}}">
             <button class="btn btn-outline-info" onclick="search()">Cari</button>
           </div>
           <div class="d-flex justify-context-left">
-            <!--<div class="dropdown mt-2">
-              <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Kabupaten/Kota
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item px-2 " href="#" style="display:inline;"><input type="radio"
-                    name="radio">&nbsp;1600 - Prov. Sumatera Selatan</a>
-                {{-- @foreach ($domain as $item) --}}
-                <label class="dropdown-item px-2" href="#" style="display:inline;"><input type="radio"
-                    {{-- name="radio">&nbsp;{{$item->id}} - {{$item->nama}}</label> --}}
-            {{-- @endforeach --}}
-          </div>
-      </div> -->
             <div class="input-group mt-2 rounded" style="width: 60%; ">
               <div class="input-group-prepend" style=" border-color:#17a2b8">
                 <label class="input-group-text" style=" border-color:#17a2b8; font-size: 12px; background: #17a2b8;
@@ -37,38 +23,36 @@
               </div>
               <select class="custom-select" style=" border-color:#17a2b8;font-size: 12px" id="inputGroupSelect01">
                 <option selected value="1600">1600 - Prov. Sumatera Selatan</option>
-                @foreach ($domain as $item)
-                <option value="{{$item->id}}">{{$item->id}} - {{$item->nama}}</option>
+                @foreach ($listdomain as $item)
+                <option value="{{$item->domain_id}}">{{$item->domain_id}} - {{$item->domain_name}}</option>
                 @endforeach
               </select>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </section>
   <div class="album py-5 bg-light">
     <div class="container">
       <div class="row">
+        @if ( count($publikasi)==0 )
+        <p>Data kosong</p>
+        @endif
         @foreach($publikasi as $value)
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="{{ $value->cover}}" role="img"
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img"
               aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-              {{-- <title>Placeholder</title> --}}
               <rect width="100%" height="100%" fill="#17a2b8" />
-              {{-- <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text> --}}
               <image href="{{ $value->cover}}" width="100%" height="100%" />
             </svg>
             <div class="card-body">
-              {{-- <p id="{{$value->pub_id}}"></var> --}}
               <p class="card-text">{{$value->title}}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <p id="{{$value->pub_id}}" hidden></P>
-                  <button type="button" class="rincibtn btn btn-sm btn-outline-secondary"
-                    {{-- onclick="rincibtn(<?php echo $value->pub_id?>)" --}}>Lebih
-                    rinci</button>
+                  <button type="button" class="rincibtn btn btn-sm btn-outline-secondary">Lebih rinci</button>
                 </div>
                 <small class="text-muted">{{$value->sch_date}}</small>
               </div>
@@ -103,39 +87,62 @@
     </div>
   </div>
 </main>
-<p>{{$selecteddomain}}</p>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>
   $( ".katalog" ).addClass("active");
   function search(){
-    window.location.href = "/katalog?search="+$("#search").val();
+    console.log("/katalog?search="+$("#search").val()+"&domain="+$("#inputGroupSelect01").val())
+    window.location.href = "/katalog?search="+$("#search").val()+"&domain="+$("#inputGroupSelect01").val();
   }
-  function pgclick(pg){
+  function pgclick(hal){
+    var domain = {!!json_encode($selecteddomain)!!}
     var url = new URL(window.location.href);
     var search = url.searchParams.get("search");
     var newparam ="";
-    if(search!=null){
+    if(search!=null && domain!=null){
       newparam = newparam +"?search="+search
-      newparam = newparam +"&page="+ pg
-    }else{
-      newparam = newparam +"?page="+ pg
+      newparam = newparam +"&domain="+ domain
+      newparam = newparam +"&halaman="+ hal
+      // newparam = newparam +"&page="+ hal
+    }else if(search!=null){
+      newparam = newparam +"?search="+search
+      newparam = newparam +"&halaman="+ hal
+      // newparam = newparam +"&page="+ hal
+    }else if(domain!=null){
+      newparam = newparam +"?domain="+ domain
+      newparam = newparam +"&halaman="+ hal
+      // newparam = newparam +"&page="+ hal
+    }
+    else{
+      newparam = newparam +"?halaman="+ hal
+      // newparam = newparam +"&page="+ hal
     }
     location.replace(location.protocol + '//' + location.host + location.pathname +newparam)
   }
-  $(".rincibtn").click(function(e){
-    e.preventDefault();
-    console.log( $(this).prev().attr('id'));
-    window.location.href = "/detailpub?id="+$(this).prev().attr('id');
-  })
+  
   $(document).ready(function(){
     var domain = {!!json_encode($selecteddomain)!!}
     console.log(domain)
-    if(domain!=null || domain!=1600){
-    document.getElementById('inputGroupSelect01').value = domain;
+    if(domain == null ){
+    document.getElementById('inputGroupSelect01').value = 1600;
+    domain = 1600;
     }else{
-      document.getElementById('inputGroupSelect01').value = "1600";
+      document.getElementById('inputGroupSelect01').value = domain;
     }
+    var alert = {!!json_encode($alert)!!}
+    console.log(alert)
+    if(alert=="yes"){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Judul tidak ditemukan!',
+        background: 'white',
+      })
+    }
+    $(".rincibtn").click(function(e){
+    e.preventDefault();
+    console.log( $(this).prev().attr('id'));
+    window.location.href = "/detailpub?id="+$(this).prev().attr('id')+"&domain="+ domain;
+  })
   })
 </script>
 <style>
@@ -149,5 +156,13 @@
     background-color: #fff;
     border: 1px solid #dee2e6;
   }
+
+  /* .swal2-html-container {
+    color: black
+  }
+
+  .swal2-title {
+    color: black
+  } */
 </style>
 @endsection
