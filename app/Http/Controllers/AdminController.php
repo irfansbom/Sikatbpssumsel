@@ -17,6 +17,8 @@ class AdminController extends Controller
     {
         if (session()->has('username')) {
             $list_publikasi = Publikasi::all();
+            // if(){}
+            // dd($this->getdomain());
             $listdomain = $this->getdomain()->data[1];
             if ($request->ajax()) {
                 return datatables()->of($list_publikasi)

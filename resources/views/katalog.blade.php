@@ -45,7 +45,8 @@
             <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img"
               aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
               <rect width="100%" height="100%" fill="#17a2b8" />
-              <image href="{{ $value->cover}}" width="100%" height="100%" />
+              <image @if ( str_contains( $value->cover, 'https://' ) ) href="{{$value->cover}}" @else
+                href="{{asset('files/cover')}}/{{$value->cover}}" @endif width="100%" height="100%" />
             </svg>
             <div class="card-body">
               <p class="card-text">{{$value->title}}</p>

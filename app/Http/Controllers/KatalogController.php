@@ -25,14 +25,14 @@ class KatalogController extends Controller
                 $last_page = $info->pages;
                 if ($halaman > $last_page) {
                     $info = new Json;
-                    $listpublikasi =  Publikasi::where('domain', $selecteddomain)->paginate(12, ['*'], 'page', $halaman - $last_page);
+                    $listpublikasi =  Publikasi::where('domain', $selecteddomain)->where('status_website', '0')->paginate(12, ['*'], 'page', $halaman - $last_page);
                     $info->page = $listpublikasi->currentPage() + $last_page;
                     $info->pages = $listpublikasi->lastPage() + $respon->data[0]->pages;
                     return view('katalog', ['publikasi' => $listpublikasi, 'info' => $info, 'search' => $search, 'listdomain' => $listdomain, 'selecteddomain' => $selecteddomain, 'alert' => 'no']);
                 } else {
                     $respon = $this->getallpub($selecteddomain, $halaman, $search);
                     $listpublikasi = $respon->data[1];
-                    $publikasiDB = Publikasi::where('domain', $selecteddomain)->paginate(12);
+                    $publikasiDB = Publikasi::where('domain', $selecteddomain)->where('status_website', '0')->paginate(12);
                     $info = $respon->data[0];
                     $info->pages += $publikasiDB->lastPage();
                     return view('katalog', ['publikasi' => $listpublikasi, 'info' => $info, 'search' => $search, 'listdomain' => $listdomain, 'selecteddomain' => $selecteddomain, 'alert' => 'no']);
@@ -45,7 +45,7 @@ class KatalogController extends Controller
             }
         } else { //kalo error gunakan database sendiri
             $info = new Json;
-            $listpublikasi =  Publikasi::where('domain', $selecteddomain)->paginate(12, ['*'], 'page', $halaman);
+            $listpublikasi =  Publikasi::where('domain', $selecteddomain)->where('status_website', '0')->paginate(12, ['*'], 'page', $halaman);
             $info->page = $listpublikasi->currentPage();
             $info->pages = $listpublikasi->lastPage();
             return view('katalog', ['publikasi' => $listpublikasi, 'info' => $info, 'search' => $search, 'listdomain' => $listdomain, 'selecteddomain' => $selecteddomain, 'alert' => 'no']);

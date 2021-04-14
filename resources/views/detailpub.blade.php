@@ -37,7 +37,9 @@
             </div>
             <div class="">
                 <div class="d-flex justify-content-center">
-                    <a type="button" class="btn btn-success" href="{{$data->pdf}}">
+                    <a type="button" class="btn btn-success" @if ( str_contains( $data->pdf, 'https://' ) )
+                        href="{{$data->pdf}}" @else
+                        href="{{asset('files/pdf')}}/{{$data->pdf}}" @endif>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -60,7 +62,9 @@
                         preserveAspectRatio="xMidYMid slice" focusable="false">
                         <rect width="100%" height="100%" fill="#17a2b8" />
 
-                        <image href="{{ $data->cover}}" width="100%" height="100%" />
+                        <image width="100%" height="100%" @if ( str_contains( $data->cover, 'https://' ) )
+                            href="{{$data->cover}}" @else
+                            href="{{asset('files/cover')}}/{{$data->cover}}" @endif />
                     </svg>
                 </div>
             </div>

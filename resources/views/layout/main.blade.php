@@ -44,10 +44,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item katalog">
-                    <a class="nav-link" href="/katalog">Katalog</a>
+                    <a class="nav-link" href="{{url('katalog')}}">Katalog</a>
                 </li>
                 <li class="nav-item beranda">
-                    <a class="nav-link" href="/tentang">Tentang </a>
+                    <a class="nav-link" href="{{url('tentang')}}">Tentang </a>
                 </li>
                 <li class="nav-item bpsri">
                     <a class="nav-link" href="https://www.bps.go.id">BPS RI </a>
@@ -60,7 +60,7 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#117a8b">
-                        <a class="dropdown-item text-white-50" href="/admin">Admin</a>
+                        <a class="dropdown-item text-white-50" href="{{url('admin')}}">Admin</a>
                     </div>
                 </li>
 
@@ -68,7 +68,7 @@
             <ul class="navbar-nav">
                 @if(session('username'))
                 <li class="nav-item ">
-                    <a class="nav-link mr-sm-2" href="/logout">logout</a>
+                    <a class="nav-link mr-sm-2" href="{{url('logout')}}">logout</a>
                 </li>
                 @endif
             </ul>

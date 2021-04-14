@@ -66,6 +66,9 @@
                                         <option value="{{$item->domain_id}}"> {{$item->domain_id}} -
                                             {{$item->domain_name}}</option>
                                         @endforeach
+                                        <option selected value="1">1 - BPS RI</option>
+                                        <option selected value="2">2 - BPS Provinsi Lain</option>
+                                        <option selected value="0">0 - Lembaga Lain</option>
                                     </select>
                                     {{-- <input type="text" class="form-control" id="domain" name="domain" value="" required> --}}
                                 </div>
@@ -210,9 +213,10 @@
             paging:   true,
             deferRender: true,
             info:     true,
+            lengthMenu: [15, 30, 50, 100, 200, 500],
             serverSide: true, //aktifkan server-side 
             ajax: {
-                url: '/admin',
+                url: '{{ url('admin')}}',
                 type: 'GET'
             },
             columns: [
@@ -313,7 +317,7 @@
     //ketika class edit-post yang ada pada tag body di klik maka
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        console.log(data_id)
+        // console.log(data_id)
         $.get('publikasi/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit Post");
             $('#tombol-simpan').val("edit-post");
