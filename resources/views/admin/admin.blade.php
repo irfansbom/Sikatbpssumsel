@@ -186,7 +186,7 @@
         });
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
-            startDate: '0d'
+            // startDate: '0d'
         });
         $('#datepicker').on('changeDate', function () {
             $('#my_hidden_input').val(
@@ -267,12 +267,6 @@
                     },
             ],
         });
-
-        // table.on('order.dt search.dt', function () {
-        //         table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-        //             cell.innerHTML = i + 1;
-        //         });
-        // }).draw();
     });
     if ($("#form-tambah-edit").length > 0) {
         $("#form-tambah-edit").validate({
@@ -289,7 +283,7 @@
                     contentType: false,
                     cache: false,
                     enctype: 'multipart/form-data',
-                    url: "/publikasi/store", //url simpan data
+                    url: "{{ url('publikasi/store') }}", //url simpan data
                     dataType: 'json', //data tipe kita kirim berupa JSON
                     success: function (data) { //jika berhasil 
                         $('#form-tambah-edit').trigger("reset"); //form reset
@@ -373,7 +367,7 @@
     //jika tombol hapus pada modal konfirmasi di klik maka
     $('#tombol-hapus').click(function () {
         $.ajax({
-            url: "/publikasi/" + dataId, //eksekusi ajax ke url ini
+            url: "{{ url('publikasi/') }}" +"/"+ dataId, //eksekusi ajax ke url ini
             type: 'DELETE',
             beforeSend: function () {
                 $('#tombol-hapus').text('Hapus Data'); //set text untuk tombol hapus

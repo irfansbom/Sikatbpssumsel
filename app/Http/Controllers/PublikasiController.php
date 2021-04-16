@@ -13,13 +13,14 @@ class PublikasiController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $id = "";
-        if ($request->id == "") {
-            $id = Publikasi::orderBy('pub_id', 'desc')->first()->id + 1;
+        $id = $request->id;
+        // dd($id);
+        if ($request->id == null) {
+            $id = Publikasi::orderBy('pub_id', 'desc')->first()->pub_id + 1;
         } else {
             $id = $request->id;
         }
-
+        // dd($id);
         $namecover = $request->covername;
         if ($request->hasfile('cover')) {
             $namecover = $id . "_" . $request->file('cover')->getClientOriginalName();

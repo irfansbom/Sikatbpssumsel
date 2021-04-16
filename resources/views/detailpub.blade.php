@@ -37,7 +37,8 @@
             </div>
             <div class="">
                 <div class="d-flex justify-content-center">
-                    <a type="button" class="btn btn-success" @if ( str_contains( $data->pdf, 'https://' ) )
+                    <a type="button" class="btn btn-success" @if ( $data->pdf ==null ||str_contains( $data->pdf,
+                        'https://' ) )
                         href="{{$data->pdf}}" @else
                         href="{{asset('files/pdf')}}/{{$data->pdf}}" @endif>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -62,7 +63,8 @@
                         preserveAspectRatio="xMidYMid slice" focusable="false">
                         <rect width="100%" height="100%" fill="#17a2b8" />
 
-                        <image width="100%" height="100%" @if ( str_contains( $data->cover, 'https://' ) )
+                        <image width="100%" height="100%" @if ($data->cover ==null || str_contains( $data->cover,
+                            'https://' ) )
                             href="{{$data->cover}}" @else
                             href="{{asset('files/cover')}}/{{$data->cover}}" @endif />
                     </svg>
@@ -199,7 +201,7 @@
 <script>
     $( ".katalog" ).addClass("active");
     function search(){
-      window.location.href = "/katalog?search="+$("#search").val();
+      window.location.href = '{{url("/katalog?search=")}}'+$("#search").val();
     }
     $(document).ready(function(){
         $('#isi_abstrak').html({!! json_encode($data->abstract) !!})

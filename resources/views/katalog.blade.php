@@ -45,7 +45,8 @@
             <svg class="bd-placeholder-img card-img-top" width="100%" height="225" role="img"
               aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
               <rect width="100%" height="100%" fill="#17a2b8" />
-              <image @if ( str_contains( $value->cover, 'https://' ) ) href="{{$value->cover}}" @else
+              <image @if ( $value->cover ==null ||str_contains( $value->cover, 'https://' ) ) href="{{$value->cover}}"
+                @else
                 href="{{asset('files/cover')}}/{{$value->cover}}" @endif width="100%" height="100%" />
             </svg>
             <div class="card-body">
@@ -91,8 +92,8 @@
 <script>
   $( ".katalog" ).addClass("active");
   function search(){
-    console.log("/katalog?search="+$("#search").val()+"&domain="+$("#inputGroupSelect01").val())
-    window.location.href = "/katalog?search="+$("#search").val()+"&domain="+$("#inputGroupSelect01").val();
+    // console.log("/katalog?search="+$("#search").val()+"&domain="+$("#inputGroupSelect01").val())
+    window.location.href ='{{url("/katalog?search=")}}'+$("#search").val()+"&domain="+$("#inputGroupSelect01").val();
   }
   function pgclick(hal){
     var domain = {!!json_encode($selecteddomain)!!}
@@ -122,7 +123,7 @@
   
   $(document).ready(function(){
     var domain = {!!json_encode($selecteddomain)!!}
-    console.log(domain)
+    // console.log(domain)
     if(domain == null ){
     document.getElementById('inputGroupSelect01').value = 1600;
     domain = 1600;
@@ -130,7 +131,7 @@
       document.getElementById('inputGroupSelect01').value = domain;
     }
     var alert = {!!json_encode($alert)!!}
-    console.log(alert)
+    // console.log(alert)
     if(alert=="yes"){
       Swal.fire({
         icon: 'error',
@@ -142,7 +143,9 @@
     $(".rincibtn").click(function(e){
     e.preventDefault();
     console.log( $(this).prev().attr('id'));
-    window.location.href = "/detailpub?id="+$(this).prev().attr('id')+"&domain="+ domain;
+    var url = '{{ url("detailpub?id=") }}'
+    console.log(url+$(this).prev().attr('id')+"&domain="+ domain);
+    window.location.href = url+$(this).prev().attr('id')+"&domain="+ domain;
   })
   })
 </script>
