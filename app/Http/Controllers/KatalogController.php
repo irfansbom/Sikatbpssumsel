@@ -17,6 +17,11 @@ class KatalogController extends Controller
         if ($selecteddomain == null) {
             $selecteddomain = 1600;
         }
+        $listdomain = $this->getdomain();
+        // dd($listdomain);
+        if ($listdomain == null) {
+            return view('error.servererror');
+        }
         $listdomain = $this->getdomain()->data[1];
         $respon = $this->getallpub($selecteddomain, 1, $search);
         if ($respon != null) { //cek website pusat error atau tidak

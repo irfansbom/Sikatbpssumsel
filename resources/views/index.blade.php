@@ -587,7 +587,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
+  {{-- <footer id="footer">
     <div class="container">
       <div class="copyright">
         &copy; Copyright <strong><span>BPS Provinsi Sumatera Selatan</span></strong>.
@@ -596,7 +596,7 @@
         Designed by <a href="">BOMBOM ART</a>
       </div>
     </div>
-  </footer><!-- End #footer -->
+  </footer><!-- End #footer --> --}}
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PublikasiDataTable;
+use App\Exports\PublikasiExport;
 use App\Models\Publikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+// require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class AdminController extends Controller
 {
@@ -71,6 +77,43 @@ class AdminController extends Controller
         session()->forget('username');
         return  redirect()->action([AdminController::class, 'loginview']);
     }
+
+    public function unduhdata()
+    {
+        if (session()->has('username')) {
+            // $spreadsheet = new Spreadsheet();
+            // $sheet = $spreadsheet->getActiveSheet();
+            // $sheet->setCellValue('A1', 'Hello World !');
+            // $writer = new Xlsx($spreadsheet);
+            // // header('Content-Type: application/vnd.ms-excel');
+            // // header('Content-Disposition: attachment; filename=helloworld.xlsx');
+            // $writer->save('hello world.xlsx');
+            // return $writer;
+            // Excel::create('Filename', function ($excel) {
+            // })->export('xls');
+            // or
+            // ->download('xls');
+
+            return Excel::download(new PublikasiExport, 'datasikat.xlsx');
+            // return Excel::create('Filename', function ($excel) {
+
+            //     $excel->sheet('Sheetname', function ($sheet) {
+
+            //         // Sheet manipulation
+
+            //     });
+            // })->export('xls');
+            // return [
+            //     (new PublikasiExport)->withHeadings(),
+            // ];
+        } else {
+            return view('admin/login');;
+        }
+    }
+
+
+
+
     public function getdomain()
     {
         $prov = 1600;

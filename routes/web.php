@@ -29,9 +29,11 @@ Route::get('/tentang', [PagesController::class, 'home']);
 Route::get('bpsframe/bpsri', [BpsFrameController::class, 'bpsri']);
 Route::get('bpsframe/bpssumsel', [BpsFrameController::class, 'bpssumsel']);
 
+
 Route::get('/admin', [AdminController::class, 'loginview'])->name('publikasi.index');
 Route::post('/login', [AdminController::class, 'login']);
 Route::get('/logout', [AdminController::class, 'logout']);
+Route::get('/admin/unduh', [AdminController::class, 'unduhdata']);
 
 Route::get('/publikasi/{id}/edit', [PublikasiController::class, 'edit']);
 Route::post('/publikasi/store', [PublikasiController::class, 'store']);

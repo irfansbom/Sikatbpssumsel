@@ -20,7 +20,7 @@ class DetailController extends Controller
                 $data = $respon->data;
                 // dump($respon);
                 if (ModelsPublikasi::where('title', $data->title)->first()) {
-                    $data->no_rak = ModelsPublikasi::where('judul', $data->title)->first()->no_rak;
+                    $data->no_rak = ModelsPublikasi::where('title', $data->title)->first()->no_rak;
                 } else {
                     $data->no_rak = '-';
                 }

@@ -13,6 +13,8 @@
                 <div class="col-md-12 card-body">
                     <a href="javascript:void(0)" class="btn btn-info ml-1 mr-auto" id="tombol-tambah">Tambah
                         Publikasi</a>
+                    <a href="{{url('admin/unduh')}}" target="_blank" class="btn btn-success ml-1 mr-auto float-right"
+                        id="tombol-unduh">Unduh Data</a>
                     <br><br>
                     <table class="table table-striped table-bordered table-sm" id="table_publikasi">
                         <thead>
@@ -206,6 +208,7 @@
         $('#modal-judul').html("Tambah Publikasi"); //valuenya tambah pegawai baru
         $('#tambah-edit-modal').modal('show'); //modal tampil
     });
+    
     $(document).ready(function () {
         table = $('#table_publikasi').DataTable({
             processing: true,

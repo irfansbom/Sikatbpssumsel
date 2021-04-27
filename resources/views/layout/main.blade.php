@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {{-- boostrap --}}
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -29,7 +30,7 @@
     </script>
     {{-- sweetalert2 --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 
     <title>@yield('title')</title>
 </head>
@@ -66,9 +67,15 @@
 
             </ul>
             <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <p class="small text-center m-0 font-italic small font-weight-bold text-dark">AYO BANTU ISI</p>
+                    <a class="nav-link mr-sm-2 small " style="padding:0" href="http://s.bps.go.id/SKK2021">
+                        Survei Kepuasan Pengunjung
+                    </a>
+                </li>
                 @if(session('username'))
                 <li class="nav-item ">
-                    <a class="nav-link mr-sm-2" href="{{url('logout')}}">logout</a>
+                    <a class="nav-link mr-sm-2 " href="{{url('logout')}}">logout<i class="bi bi-door-open"></i></a>
                 </li>
                 @endif
             </ul>
@@ -78,7 +85,39 @@
     </nav>
 
     @yield('container')
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>BPS Provinsi Sumatera Selatan</span></strong>.
+            </div>
+            <div class="credits">
+                Designed by <a href="" style=" color: #43aea0;">BOMBOM ART</a>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
 @yield('style')
+<style>
+    /*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+    #footer {
+        background: #117a8b;
+        padding: 30px 0;
+        color: #fff;
+        font-size: 14px;
+    }
+
+    #footer .copyright {
+        text-align: center;
+    }
+
+    #footer .credits {
+        padding-top: 10px;
+        text-align: center;
+        font-size: 13px;
+        color: #fff;
+    }
+</style>
